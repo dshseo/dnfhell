@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>던파 헬 랜덤 채널 추천</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #channelBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #channelBtn:hover {
+            background-color: #2980b9;
+        }
+        .recommendation {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #e63e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="channelBtn">헬 채널 추천 돌려돌려</button>
+        <div id="recommendation" class="recommendation"></div>
+    </div>
+
+    <script>
+        // 채널 목록 배열
+        const channels = [
+            "벨 마이어 공국 1채널",
+            "벨 마이어 공국 2채널",
+            "벨 마이어 공국 3채널",
+            "벨 마이어 공국 4채널",
+            "벨 마이어 공국 5채널",
+            "벨 마이어 공국 6채널",
+            "벨 마이어 공국 7채널",
+            "벨 마이어 공국 8채널",
+            "벨 마이어 공국 9채널",
+            "벨 마이어 공국 10채널",
+            "벨 마이어 공국 12채널",
+            "벨 마이어 공국 13채널",
+            "벨 마이어 공국 14채널",
+            "벨 마이어 공국 15채널",
+            "벨 마이어 공국 16채널",
+            "벨 마이어 공국 17채널",
+            "벨 마이어 공국 18채널",
+            "지벤 황국 1채널",
+            "지벤 황국 2채널",
+            "지벤 황국 3채널",
+            "지벤 황국 4채널",
+            "지벤 황국 5채널",
+            "지벤 황국 6채널",
+            "지벤 황국 7채널(포화 주의)",
+            "지벤 황국 8채널",
+            "지벤 황국 9채널",
+            "지벤 황국 10채널",
+            "지벤 황국 11채널",
+            "지벤 황국 12채널",
+            "마계 1채널(포화 주의)",
+            "마계 2채널",
+            "마계 3채널",
+            "마계 4채널",
+            "마계 5채널",
+            "마계 6채널",
+            "마계 7채널(포화 주의)",
+            "마계 8채널",
+            "마계 9채널",
+            "마계 10채널(포화 주의)",
+            "바하이트 1채널",
+            "바하이트 2채널",
+            "바하이트 3채널",
+            "바하이트 4채널",
+            "바하이트 5채널",
+            "바하이트 6채널",
+            "바하이트 7채널",
+            "바하이트 8채널",
+            "바하이트 9채널",
+            "바하이트 10채널",
+            "바하이트 11채널",
+            "바하이트 12채널",
+            "백해 1채널",
+            "백해 2채널",
+            "백해 3채널",
+            "백해 4채널",
+            "백해 5채널",
+            "백해 6채널",
+            "백해 7채널",
+            "백해 8채널",
+            "백해 9채널",
+            "백해 10채널",
+            "백해 11채널",
+            "백해 12채널",
+            "백해 13채널",
+            "백해 14채널",
+            "백해 15채널",
+            "백해 16채널",
+            "백해 17채널",
+            "백해 18채널",
+            "중천 40채널",
+            "중천 41채널",
+            "중천 42채널",
+            "중천 43채널",
+            "중천 44채널",
+            "중천 45채널",
+            "중천 46채널",
+            "중천 47채널",
+            "중천 48채널",
+            "중천 49채널",
+            "중천 50채널",
+            "중천 51채널",
+            "중천 52채널",
+            "중천 53채널",
+            "중천 54채널",
+            "중천 55채널",
+            "중천 56채널",
+            "중천 57채널",
+            "중천 58채널",
+            "중천 59채널",
+            "중천 60채널",
+            "중천 61채널",
+            "중천 62채널",
+            "중천 63채널",
+            "중천 64채널",
+            "중천 65채널",
+            "중천 66채널",
+            "중천 67채널",
+            "중천 68채널",
+            "중천 69채널(포화 주의)",
+            "중천 70채널",
+            "중천 71채널",
+            "중천 72채널",
+            "중천 73채널",
+            "중천 74채널(포화 주의)",
+            "중천 75채널",
+            "중천 76채널",
+            "중천 77채널",
+            "중천 78채널",
+            "중천 79채널",
+            "중천 80채널",
+            "중천 81채널",
+            "중천 82채널",
+            "중천 83채널",
+            "중천 84채널",
+            "중천 85채널",
+            "중천 86채널",
+            "중천 87채널",
+            "중천 88채널",
+            "중천 89채널",
+            "거래 - 경매장 61채널",
+            "거래 - 경매장 62채널",
+        ];
+
+        // 버튼 클릭 시 랜덤으로 채널 추천
+        document.getElementById('channelBtn').addEventListener('click', function() {
+            const randomIndex = Math.floor(Math.random() * channels.length);
+            const recommendedChannel = channels[randomIndex];
+            document.getElementById('recommendation').textContent = `[ ${recommendedChannel} ] 추천드려얌! 태초기원!`;
+        });
+    </script>
+</body>
+</html>
